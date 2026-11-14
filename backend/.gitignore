@@ -1,0 +1,16 @@
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/public/assets
+/public/index.html
+/storage/*.key
+/storage/pail
+/vendor
+.env
+.env.backup
+.env.production
+*.csv
+/storage/app/**/*.csv
+/.zed

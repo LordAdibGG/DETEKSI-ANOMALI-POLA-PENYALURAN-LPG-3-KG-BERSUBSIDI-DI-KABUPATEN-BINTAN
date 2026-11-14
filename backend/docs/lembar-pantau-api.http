@@ -1,0 +1,105 @@
+### ============================================================================
+### LEMBAR PANTAU — Koleksi Permintaan REST API (Fase 2)
+### Base URL: http://127.0.0.1:8000/api
+### ============================================================================
+
+@baseUrl = http://127.0.0.1:8000/api
+@token = GANTI_DENGAN_BEARER_TOKEN_HASIL_LOGIN
+
+### 0. Pemeriksaan Kesehatan Layanan (Publik)
+GET {{baseUrl}}/health
+Accept: application/json
+
+### 1a. Login sebagai Admin (melihat nama asli pangkalan)
+# @name loginAdmin
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "admin@bintankab.go.id",
+  "password": "admin123"
+}
+
+### 1b. Login sebagai Petugas Monev (hanya melihat kode P01-P30)
+# @name loginPetugas
+POST {{baseUrl}}/auth/login
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "petugas@bintankab.go.id",
+  "password": "petugas123"
+}
+
+### 2. Profil Pengguna Aktif (GET /api/me)
+GET {{baseUrl}}/me
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 3a. Ringkasan Keseluruhan Jan-Okt 2026 (GET /api/ringkasan)
+GET {{baseUrl}}/ringkasan
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 3b. Ringkasan Bulan Tertentu — Misal September / Bulan 9 (GET /api/ringkasan?bulan=9)
+GET {{baseUrl}}/ringkasan?bulan=9
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 4a. Daftar Prioritas Pemeriksaan Pangkalan (GET /api/prioritas)
+GET {{baseUrl}}/prioritas
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 4b. Daftar Prioritas dengan Filter Bulan, Kategori, Pencarian, dan Urutan
+GET {{baseUrl}}/prioritas?bulan=1&kategori=Sporadis&q=Bintan&sort=maks_lof_desc
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 5. Profil Lengkap Pangkalan P01 / P10 (GET /api/pangkalan/{kode})
+GET {{baseUrl}}/pangkalan/P10
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 6. Matriks Heatmap Pangkalan x 10 Bulan (GET /api/heatmap)
+GET {{baseUrl}}/heatmap
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 7a. Daftar Temuan Flag Aturan (GET /api/temuan-aturan)
+GET {{baseUrl}}/temuan-aturan
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 7b. Daftar Temuan Flag Aturan Filter Jenis & Bulan
+GET {{baseUrl}}/temuan-aturan?jenis=melebihi_alokasi&bulan=1
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 8. Metodologi, Keterbatasan, dan Evaluasi Bab V (GET /api/metode)
+GET {{baseUrl}}/metode
+Authorization: Bearer {{token}}
+Accept: application/json
+
+### 9. Ekspor Daftar Prioritas ke CSV (GET /api/export/prioritas.csv)
+GET {{baseUrl}}/export/prioritas.csv?sort=maks_lof_desc
+Authorization: Bearer {{token}}
+Accept: text/csv
+
+### 9b. Jalankan Analisis LOF Baru via Layanan Python (POST /api/analisis/run - Khusus Admin)
+POST {{baseUrl}}/analisis/run
+Authorization: Bearer {{token}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "k": 10,
+  "threshold": 1.5,
+  "nama": "run-manual-k10"
+}
+
+### 10. Logout / Akhiri Sesi (POST /api/auth/logout)
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{token}}
+Accept: application/json

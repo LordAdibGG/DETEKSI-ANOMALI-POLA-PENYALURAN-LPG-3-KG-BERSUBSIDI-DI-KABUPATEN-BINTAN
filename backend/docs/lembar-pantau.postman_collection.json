@@ -1,0 +1,218 @@
+{
+  "info": {
+    "name": "Lembar Pantau — REST API (Fase 2)",
+    "_postman_id": "9f8c2a10-4b3e-4d1a-9a12-76eaea905bc8",
+    "description": "Koleksi Postman untuk pengujian endpoint REST API Lembar Pantau (Pengawasan Penyaluran LPG 3 kg Kabupaten Bintan).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "0. Health Check",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      }
+    },
+    {
+      "name": "1. Auth - Login Admin",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@bintankab.go.id\",\n  \"password\": \"admin123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "2. Auth - Login Petugas",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"petugas@bintankab.go.id\",\n  \"password\": \"petugas123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/auth/login",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "login"]
+        }
+      }
+    },
+    {
+      "name": "3. Auth - Profil Pengguna (/me)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/me",
+          "host": ["{{baseUrl}}"],
+          "path": ["me"]
+        }
+      }
+    },
+    {
+      "name": "4. Ringkasan (/ringkasan)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/ringkasan?bulan=9",
+          "host": ["{{baseUrl}}"],
+          "path": ["ringkasan"],
+          "query": [{ "key": "bulan", "value": "9" }]
+        }
+      }
+    },
+    {
+      "name": "5. Daftar Prioritas (/prioritas)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/prioritas?bulan=&kategori=&q=&sort=maks_lof_desc",
+          "host": ["{{baseUrl}}"],
+          "path": ["prioritas"],
+          "query": [
+            { "key": "bulan", "value": "" },
+            { "key": "kategori", "value": "" },
+            { "key": "q", "value": "" },
+            { "key": "sort", "value": "maks_lof_desc" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "6. Profil Pangkalan (/pangkalan/P10)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/pangkalan/P10",
+          "host": ["{{baseUrl}}"],
+          "path": ["pangkalan", "P10"]
+        }
+      }
+    },
+    {
+      "name": "7. Matriks Heatmap (/heatmap)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/heatmap",
+          "host": ["{{baseUrl}}"],
+          "path": ["heatmap"]
+        }
+      }
+    },
+    {
+      "name": "8. Temuan Flag Aturan (/temuan-aturan)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/temuan-aturan?jenis=melebihi_alokasi&bulan=1",
+          "host": ["{{baseUrl}}"],
+          "path": ["temuan-aturan"],
+          "query": [
+            { "key": "jenis", "value": "melebihi_alokasi" },
+            { "key": "bulan", "value": "1" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "9. Metodologi & Evaluasi (/metode)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/metode",
+          "host": ["{{baseUrl}}"],
+          "path": ["metode"]
+        }
+      }
+    },
+    {
+      "name": "10. Ekspor CSV (/export/prioritas.csv)",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Accept", "value": "text/csv" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/export/prioritas.csv",
+          "host": ["{{baseUrl}}"],
+          "path": ["export", "prioritas.csv"]
+        }
+      }
+    },
+    {
+      "name": "11. Auth - Logout",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Accept", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/auth/logout",
+          "host": ["{{baseUrl}}"],
+          "path": ["auth", "logout"]
+        }
+      }
+    }
+  ]
+}
