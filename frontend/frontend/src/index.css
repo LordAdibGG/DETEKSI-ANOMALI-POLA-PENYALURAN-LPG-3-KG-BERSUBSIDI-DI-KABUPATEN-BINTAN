@@ -1,0 +1,308 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  /* Tipografi UI (Google Fonts: Inter & Bebas Neue) */
+  --font-serif: "Inter", "Newsreader", Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: "Inter", "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "Inter", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-display: "Bebas Neue", "Inter", sans-serif;
+
+  /* Token Warna Inti Lembar Pantau (Adaptif Terang / Mode Gelap) */
+  --color-kertas: var(--surface-paper);
+  --color-kertas-terang: var(--surface-elevated);
+  --color-kertas-redup: var(--surface-subtle);
+  --color-tinta: var(--text-ink);
+  --color-tinta-redup: var(--text-muted);
+  --color-tinta-lembut: var(--text-soft);
+  --color-garis: var(--border-rule);
+  --color-garis-tegas: var(--border-strong);
+  --color-anomali: var(--accent-anomali-teks);
+  --color-berulang: var(--accent-mustard);
+  --color-mustard: var(--accent-mustard);
+  --color-biru-baja: var(--accent-biru-baja);
+  --color-hijau-melon: #86B817;
+  --color-latar-gelap: #0F1814;
+
+  /* Alias Semantik Adaptif (Terang / Mode Gelap) */
+  --color-paper: var(--surface-paper);
+  --color-paper-subtle: var(--surface-subtle);
+  --color-paper-elevated: var(--surface-elevated);
+  --color-ink: var(--text-ink);
+  --color-ink-muted: var(--text-muted);
+  --color-ink-soft: var(--text-soft);
+  --color-rule: var(--border-rule);
+  --color-rule-strong: var(--border-strong);
+  --color-rust: var(--accent-anomali);
+  --color-melon: #86B817;
+
+  /* Kurva Gerak Editorial */
+  --ease-editorial: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+:root {
+  color-scheme: light;
+  --surface-paper: #F3EFE4;
+  --surface-subtle: #EAE4D3;
+  --surface-elevated: #F8F5EC;
+  --text-ink: #17211C;
+  --text-muted: #435049;
+  --text-soft: #52615A;
+  --border-rule: #D9D2BF;
+  --border-strong: #17211C;
+
+  /* Aksen. Dua token untuk anomali: isian/garis (#D9480F, tanda grafis >= 3:1)
+     dan teks (#A93509, kontras >= 5:1 pada kertas, subtle, dan latar tint). */
+  --accent-anomali: #D9480F;
+  --accent-anomali-teks: #A93509;
+  --accent-anomali-bg: rgba(217, 72, 15, 0.10);
+  --accent-mustard: #7F5600;
+  --accent-mustard-raw: #C98A00;
+  --accent-mustard-bg: rgba(201, 138, 0, 0.14);
+  --accent-biru-baja: #2B5470;
+  --accent-biru-baja-raw: #3B6E8F;
+  --accent-biru-baja-bg: rgba(59, 110, 143, 0.12);
+  --accent-lulus: #3F6212;
+
+  /* Sinkronisasi variabel --color-* untuk elemen SVG dan utilitas Tailwind */
+  --color-kertas: #F3EFE4;
+  --color-kertas-terang: #F8F5EC;
+  --color-kertas-redup: #EAE4D3;
+  --color-tinta: #17211C;
+  --color-tinta-redup: #435049;
+  --color-tinta-lembut: #52615A;
+  --color-garis: #D9D2BF;
+  --color-garis-tegas: #17211C;
+  --color-anomali: #D9480F;
+  --color-berulang: #7F5600;
+}
+
+html.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  /* Mode gelap: latar #0F1814, kertas diganti tinta terang (#F3EFE4), kontras >= AA */
+  --surface-paper: #0F1814;
+  --surface-subtle: #16221C;
+  --surface-elevated: #1B2922;
+  --text-ink: #F3EFE4;
+  --text-muted: #C2BCB0;
+  --text-soft: #9CA69F;
+  --border-rule: #2A3B32;
+  --border-strong: #F3EFE4;
+
+  /* Luminansi aksen disesuaikan agar >= 4.5:1 terhadap #0F1814 */
+  --accent-anomali: #FF6B35;
+  --accent-anomali-teks: #FF6B35;
+  --accent-anomali-bg: rgba(217, 72, 15, 0.22);
+  --accent-mustard: #F0B429;
+  --accent-mustard-raw: #C98A00;
+  --accent-mustard-bg: rgba(201, 138, 0, 0.22);
+  --accent-biru-baja: #6BA3C7;
+  --accent-biru-baja-raw: #3B6E8F;
+  --accent-biru-baja-bg: rgba(59, 110, 143, 0.25);
+  --accent-lulus: #A3E635;
+
+  /* Sinkronisasi variabel --color-* pada Mode Gelap agar teks & SVG kontras tinggi */
+  --color-kertas: #0F1814;
+  --color-kertas-terang: #16221C;
+  --color-kertas-redup: #1B2922;
+  --color-tinta: #F3EFE4;
+  --color-tinta-redup: #C2BCB0;
+  --color-tinta-lembut: #9CA69F;
+  --color-garis: #2A3B32;
+  --color-garis-tegas: #F3EFE4;
+  --color-anomali: #FF6B35;
+  --color-berulang: #F0B429;
+}
+
+@layer base {
+  html {
+    background-color: var(--surface-paper);
+    color: var(--text-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--surface-paper);
+    color: var(--text-ink);
+    font-family: var(--font-sans);
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-editorial {
+    font-family: var(--font-serif);
+    letter-spacing: -0.015em;
+  }
+
+  .font-tabular {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    font-weight: 700;
+  }
+
+  .recall-card {
+    container-type: inline-size;
+  }
+
+  .recall-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 1rem;
+    row-gap: 0.25rem;
+    align-items: start;
+  }
+
+  .recall-row-value {
+    min-width: 9.5ch;
+    white-space: nowrap;
+    text-align: right;
+    align-self: start;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @container (max-width: 479px) {
+    .recall-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .recall-row-value {
+      order: -1;
+      text-align: left;
+      min-width: 0;
+    }
+  }
+
+  @media (max-width: 479px) {
+    .recall-row {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .recall-row-value {
+      order: -1;
+      text-align: left;
+      min-width: 0;
+    }
+  }
+
+  /* Fokus keyboard: cincin tebal 3 px berwarna aksen dengan jarak 2 px, plus
+     lingkar tinta/kertas di luarnya agar tetap terlihat di atas latar apa pun. */
+  :focus-visible {
+    outline: 3px solid var(--accent-anomali);
+    outline-offset: 2px;
+    box-shadow: 0 0 0 5px var(--surface-paper);
+  }
+
+  /* Elemen SVG interaktif (sel peta panas, titik playground) memakai tabindex. */
+  svg :focus-visible {
+    outline: 3px solid var(--accent-anomali);
+    outline-offset: 1px;
+    box-shadow: none;
+  }
+}
+
+/* Tautan lompat ke konten: muncul hanya saat difokus keyboard. */
+.lompat-ke-konten {
+  position: absolute;
+  left: 12px;
+  top: -64px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--text-ink);
+  color: var(--surface-paper);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.lompat-ke-konten:focus {
+  top: 12px;
+}
+
+/* Target sentuh minimal 40 px pada layar sentuh/tablet. */
+@media (pointer: coarse) {
+  button,
+  [role="button"],
+  select,
+  input[type="range"],
+  nav a {
+    min-height: 40px;
+  }
+}
+
+/* Proyektor / layar lebar: skala dasar sedikit lebih besar agar terbaca dari belakang ruangan. */
+@media (min-width: 1800px) {
+  html {
+    font-size: 17.5px;
+  }
+}
+
+/* Gerak dikurangi: tanpa animasi dan transisi, tanpa denyut skeleton. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-pulse,
+  .animate-spin,
+  .animate-ping {
+    animation: none !important;
+  }
+}
+
+.print-only {
+  display: none;
+}
+
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 12mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 10pt !important;
+  }
+
+  .print-hidden,
+  header nav,
+  footer {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  th,
+  td {
+    border: 1px solid #17211c !important;
+    padding: 4px 6px !important;
+    color: #000000 !important;
+    background: transparent !important;
+  }
+}
