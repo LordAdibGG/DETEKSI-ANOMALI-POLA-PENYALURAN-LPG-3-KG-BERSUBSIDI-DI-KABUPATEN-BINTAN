@@ -1,0 +1,27 @@
+# Environment variables & secrets
+.env
+.env.*
+!.env.example
+*/.env
+*/.env.*
+!*/.env.example
+
+# Sensitive KJP 2026 raw & processed CSV files with real pangkalan names
+data/*.csv
+**/kjp_2026_wide.csv
+**/master_pangkalan_wide.csv
+**/master_harian_long.csv
+**/lookup_internal_pangkalan.csv
+**/ringkasan_per_pangkalan.csv
+**/fitur_eksplorasi_pangkalan.csv
+**/data_april_bersih*.csv
+**/fitur_april_194.csv
+**/usulan_pemetaan_kecamatan.csv
+
+# Dependencies & build artifacts
+node_modules/
+vendor/
+dist/
+__pycache__/
+.pytest_cache/
+*.pyc
